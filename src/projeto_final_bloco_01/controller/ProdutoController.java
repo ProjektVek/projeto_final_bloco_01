@@ -55,7 +55,7 @@ public class ProdutoController implements ProdutoRepository {
 	}
 
 	@Override
-	public void atualizarProduto(ProdutoGenerico produto) {
+	public boolean atualizarProduto(ProdutoGenerico produto) {
 		
 		Optional<ProdutoGenerico> buscaProduto = buscarNaCollection(produto.getId());
 		
@@ -65,10 +65,12 @@ public class ProdutoController implements ProdutoRepository {
 			System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
 			System.out.printf("%s║        %sO produto foi atualizado com sucesso!   %s   ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
 			System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+			return true;
 		} else {
 			System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
 			System.out.printf("%s║        %sO produto não foi encontado!          %s     ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
 			System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+			return false;
 		}
 		
 	}

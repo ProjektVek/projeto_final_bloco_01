@@ -7,7 +7,7 @@ public interface ProdutoRepository {
 	public boolean cadastrarProduto(ProdutoGenerico produto);
 	public void listarTodosProdutos();
 	public void buscarPorID(int id);
-	public void atualizarProduto(ProdutoGenerico produto);
+	public boolean atualizarProduto(ProdutoGenerico produto);
 	public void deletarProduto(int id);
 	
 }

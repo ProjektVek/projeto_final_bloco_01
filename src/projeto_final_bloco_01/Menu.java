@@ -144,6 +144,44 @@ public class Menu {
 					System.out.printf("%s╠═══════════════════════════════════════════════════╣%n", Cores.corMoldura);
 					System.out.printf("%s║ %sDigite o id do Produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
 					id = leia.nextInt();
+					
+					System.out.printf("%s║ %sDigite o nome do produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					leia.skip("\\R");
+					nome = leia.nextLine();
+					System.out.printf("%s║ %sDigite a marca do produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					marca = leia.nextLine();
+					System.out.printf("%s║ %sDigite a categoria do produto%s \n", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					System.out.printf("%s║ %s(1 - Placa-Mãe | 2 - Processador | 3 - Outros):%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					categoria = leia.nextInt();
+					System.out.printf("%s║ %sDigite o preço do produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					preco = leia.nextDouble();
+					
+					if(categoria == 1) {
+						System.out.printf("%s║ %sDigite o socket:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						leia.skip("\\R");
+						socket = leia.nextLine();
+						
+						System.out.printf("%s║ %sDigite o chipset:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						chipset = leia.nextLine();
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						
+						produtos.atualizarProduto(new PlacaMae(id, nome, marca, categoria, preco, socket, chipset));
+					} else if(categoria == 2) {
+						System.out.printf("%s║ %sDigite o socket:%s \n", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						leia.skip("\\R");
+						socket = leia.nextLine();
+						
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						produtos.atualizarProduto(new Processador(id, nome, marca, categoria, preco, socket));
+					} else if(categoria == 3){
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						produtos.atualizarProduto(new Produto(id, nome, marca, categoria, preco));
+					} else {
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
+						System.out.printf("%s║        %sCategoria inválida!%s             ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
+						System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+					}
 					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
 					
 					keyPress();
