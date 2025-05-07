@@ -3,11 +3,20 @@ package projeto_final_bloco_01;
 import java.io.IOException;
 import java.util.Scanner;
 
+import projeto_final_bloco_01.model.PlacaMae;
+import projeto_final_bloco_01.model.Processador;
+import projeto_final_bloco_01.model.Produto;
+import projeto_final_bloco_01.model.ProdutoGenerico;
 import projeto_final_bloco_01.util.Cores;
 
 public class Menu {
-
+	
+	
+	
 	public static void main(String[] args) {
+		
+		Produto p = new Produto(1, "A", "B", 3, 200);
+		p.visualizar();
 		
 		Scanner leia = new Scanner(System.in);
 		
