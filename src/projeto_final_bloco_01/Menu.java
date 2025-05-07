@@ -3,6 +3,7 @@ package projeto_final_bloco_01;
 import java.io.IOException;
 import java.util.Scanner;
 
+import projeto_final_bloco_01.controller.ProdutoController;
 import projeto_final_bloco_01.model.PlacaMae;
 import projeto_final_bloco_01.model.Processador;
 import projeto_final_bloco_01.model.Produto;
@@ -15,10 +16,9 @@ public class Menu {
 	
 	public static void main(String[] args) {
 		
-		Produto p = new Produto(1, "A", "B", 3, 200);
-		p.visualizar();
-		
 		Scanner leia = new Scanner(System.in);
+		
+		ProdutoController produtos = new ProdutoController();
 		
 		while(true) {
 			
@@ -72,7 +72,45 @@ public class Menu {
 					categoria = leia.nextInt();
 					System.out.printf("%s║ %sDigite o preço do produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
 					preco = leia.nextDouble();
-					System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+					
+					if(categoria == 1) {
+						System.out.printf("%s║ %sDigite o socket:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						leia.skip("\\R");
+						socket = leia.nextLine();
+						
+						System.out.printf("%s║ %sDigite o chipset:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						chipset = leia.nextLine();
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						
+						if(produtos.cadastrarProduto(new PlacaMae(produtos.gerarID(), nome, marca, categoria, preco, socket, chipset))) {
+							System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
+							System.out.printf("%s║        %sProduto Cadastrado com Sucesso!%s            ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
+							System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+						}
+					} else if(categoria == 2) {
+						System.out.printf("%s║ %sDigite o socket:%s \n", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+						leia.skip("\\R");
+						socket = leia.nextLine();
+						
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						if(produtos.cadastrarProduto(new Processador(produtos.gerarID(), nome, marca, categoria, preco, socket))) {
+							System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
+							System.out.printf("%s║        %sProduto Cadastrado com Sucesso!%s            ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
+							System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+						}
+					} else if(categoria == 3){
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						if(produtos.cadastrarProduto(new Produto(produtos.gerarID(), nome, marca, categoria, preco))) {
+							System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
+							System.out.printf("%s║        %sProduto Cadastrado com Sucesso!%s            ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
+							System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+						}
+					} else {
+						System.out.printf("%s╚══════════════════════════════════════╝             %n", Cores.corMoldura);
+						System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
+						System.out.printf("%s║        %sCategoria inválida!%s             ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
+						System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+					}
 					
 					keyPress();
 					break;
@@ -82,9 +120,7 @@ public class Menu {
 					System.out.printf("%s║               %sListar todos os Produtos            %s║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
 					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
 					
-					System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
-					System.out.printf("%s║              %sNenhum produto encontrado!       %s    ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
-					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+					produtos.listarTodosProdutos();
 					
 					keyPress();
 					break;
@@ -97,9 +133,7 @@ public class Menu {
 					id = leia.nextInt();
 					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
 					
-					System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
-					System.out.printf("%s║              %sProduto não encontrado!       %s       ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
-					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+					produtos.buscarPorID(id);
 					
 					keyPress();
 					break;
@@ -112,10 +146,6 @@ public class Menu {
 					id = leia.nextInt();
 					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
 					
-					System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
-					System.out.printf("%s║              %sProduto não encontrado!       %s       ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
-					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
-					
 					keyPress();
 					break;
 
@@ -124,15 +154,10 @@ public class Menu {
 					System.out.printf("%s║                 %sDeletar o Produto%s                  ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
 					System.out.printf("%s╠═══════════════════════════════════════════════════╣%n", Cores.corMoldura);
 					System.out.printf("%s║ %sDigite o id do Produto:%s ", Cores.corMoldura, Cores.corTextoNormal, Cores.corTextoDestaque);
+					id = leia.nextInt();
 					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
 					
-					System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
-					System.out.printf("%s║            %sProduto deletado com sucesso!     %s     ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
-					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
-					
-					System.out.printf("%s╔═══════════════════════════════════════════════════╗%n", Cores.corMoldura);
-					System.out.printf("%s║              %sProduto não encontrado!       %s       ║%n", Cores.corMoldura, Cores.corTextoNormal, Cores.corMoldura);
-					System.out.printf("%s╚═══════════════════════════════════════════════════╝%n", Cores.corMoldura);
+					produtos.deletarProduto(id);
 					
 					keyPress();
 					break;
